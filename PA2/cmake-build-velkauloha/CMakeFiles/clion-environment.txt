@@ -1,0 +1,5 @@
+ToolSet: 11.0 w64 (local)@C:\Users\adamm\Desktop\School\4.semester\PA2\Velkauloha\winlibs-i686-posix-dwarf-gcc-12.3.0-llvm-16.0.4-mingw-w64ucrt-11.0.0-r1\mingw32
+Ninja: 1.11.1@C:\Users\adamm\AppData\Local\Programs\CLion\bin\ninja\win\x64\ninja.exe
+Options: 
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/adamm/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe
