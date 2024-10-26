@@ -1,84 +1,71 @@
-DATABÁZE STUDENTU
+# DATABÁZE STUDENTŮ
 
-Úkolem je realizovat třídy, které implementují správu studentů na studijním oddělení.
+Úlohou je realizovať triedy, ktoré implementujú správu študentov na študijnom oddelení.
 
-Předpokládáme, že na studijním oddělení vedou agendu studentů. Pro jednoduchost je každý student reprezentovaný svým jménem (uvažujeme jeden řetězec pro příjmení a jméno či více jmen, jednotlivá slova jsou oddělená alespoň jednou mezerou), datem narození a rokem nástupu na fakultu. Chceme mít možnost studenty přidávat, odebírat a vyhledávat v databázi studentů. O studentech předpokládáme, že trojice údajů jméno + datum narození + rok nástupu je unikátní, v databázi se neopakuje. Samotná jména, data narození a roky nástupu se samozřejmě opakovat již mohou. Při vkládání a odebírání studenta zadáváme vždy již vyplněnou instanci studenta (obsahuje zmiňovanou trojici údajů).
+Na študijnom oddelení sa vedie agenda študentov, kde je každý študent reprezentovaný svojím menom (priezvisko a krstné meno, prípadne viac mien oddelených aspoň jednou medzerou), dátumom narodenia a rokom nástupu na fakultu. Implementácia umožňuje pridávať, odoberať a vyhľadávať študentov v databáze.
 
-Trochu komplikovanější je vyhledávání. Při vyhledávání chceme studenty filtrovat podle jména, data narození a roku nástupu na fakultu. Navrácený výsledek je seznam studentů, tento seznam chceme mít možnost seřadit podle zadaných kritérií (jméno, datum narození, rok nástupu do studia, pořadí registrace).
+## Požiadavky na funkčnosť
 
-Poslední metodou rozhraní bude našeptávač - metoda, která pro zadanou část jména studenta vybere všechny studenty, kteří zadanému vzoru vyhovují.
+- **Unikátnosť**: Trojica údajov (meno + dátum narodenia + rok nástupu) je jedinečná.
+- **Filtrovanie a radenie**: Možnosť filtrovať študentov podľa mena, dátumu narodenia a roku nástupu a radiť podľa zadaných kritérií.
+- **Našeptávač**: Pre zadanú časť mena vyhľadá všetkých študentov zodpovedajúcich zadanému vzoru.
 
-Celá implementace je rozdělena do několika tříd. V přiloženém zdrojovém kódu naleznete základ řešení - implementaci některých tříd a požadované rozhraní zbývajících tříd. Jejich popis následuje:
+## Rozhranie implementácie
 
-Třída CDate reprezentuje jednoduché datum. Instance této třídy budou sloužit pro ukládání data narození studentů a pro filtrování podle data narození. Třída je implementovaná v testovacím prostředí a je vložená (v bloku podmíněného překladu) i v přiloženém zdrojovém souboru. Význam metod je následující:
+### Trieda `CDate`
 
-konstruktor (y,m,d)
-inicializuje instanci zadaným rokem, měsícem a dnem.
-operator <=> (date)
-metoda porovná this a instanci date. Výsledkem metody je jedna z hodnot std::strong_ordering.
-výstupní operátor <<
-zobrazí datum do zadaného proudu, funkce slouží zejména pro testování a ladicí výpisy.
-poznámka
-třída je implementovaná v testovacím prostředí, implementace dodaná v přiloženém souboru slouží pouze pro Vaše ladění a při testování na Progtestu se neuplatní. Tedy nemá cenu zkoušet do rozhraní přidávat další metody, po odevzdání na Progtest nebudou k dispozici.
-Výčtový typ ESortKey souží k identifikaci kritéria řazení. Výčtový typ je deklarován v testovacím prostředí, dodaná implementace je umístěná v bloku podmíněného překladu a slouží pouze pro lokální testování. Má následující přípustné hodnoty:
+Táto trieda reprezentuje dátum a bude slúžiť pre ukladanie dátumu narodenia a filtrov.
 
-NAME
-řazení dle jména studenta,
-BIRTH_DATE
-řazení dle data narození studenta,
-ENROLL_YEAR
-řazení dle roku nástupu na fakultu.
-poznámka
-jedná se o C++11 výčtový typ, kde kompilátor striktně trvá na tom, aby souhlasil typ proměnné a typ přiřazované hodnoty. S hodnotami je potřeba pracovat pomocí plně kvalifikovaného jména, např. ESortKey::NAME.
-Třída CStudent reprezentuje jednoho studenta v databázi. Její implementace je na Vás. Povinné veřejné rozhraní je:
+- **Konstruktor `(y, m, d)`**: Inicializuje objekt zadaným rokom, mesiacom a dňom.
+- **Operátor `<=>`**: Porovnáva inštanciu `this` s inštanciou `date`, vráti jednu z hodnôt `std::strong_ordering`.
+- **Operátor `<<`**: Umožňuje výstup dátumu do streamu (používa sa hlavne na testovanie a ladenie).
 
-konstruktor (name, dateOfBirth, enrollYear)
-konstruktor inicializuje instanci pomocí zadaných parametrů.
-operator ==
-porovná dvě instance CStudent. Za shodné je bude považovat, pokud se přesně shodují ve jménu, datu narození i roku nástupu na fakultu. Porovnání jména rozlišuje malá a velká písmena (case sensitive) a rozlišuje pořadí jmen (tedy např. "Jan Jakub Ryba" a "Jakub Jan Ryba" nejsou stejná jména).
-operator !=
-porovná dvě instance CStudent. Za odlišné je bude považovat, pokud se přesně liší ve jménu, datu narození nebo roku nástupu na fakultu (v souladu s konvencí se tedy jedná o negaci výsledku operátoru ==).
-další
-Vaše implementace si do třídy může dodat další potřebné metody a členské proměnné, které budete potřebovat.
-Třída CFilter reprezentuje kritéria pro filtrování studentů ve vyhledávání:
+> Poznámka: Táto trieda je implementovaná v testovacom prostredí a nie je potrebné ju meniť.
 
-konstruktor
-konstruktor inicializuje prázdný filtr (takovému filtru vyhoví jakýkoliv záznam),
-bornBefore
-přidá do filtru omezení, kterému vyhoví pouze studenti narození před zadaným datem (studenti narození v zadaný den již filtru nevyhoví),
-bornAfter
-přidá do filtru omezení, kterému vyhoví pouze studenti narození po zadaném datu (studenti narození v zadaný den již filtru nevyhoví),
-enrolledBefore
-přidá do filtru omezení, kterému vyhoví pouze studenti zapsaní před zadaným rokem (studenti zapsaní v zadaném roce již filtru nevyhoví),
-enrolledAfter
-přidá do filtru omezení, kterému vyhoví pouze studenti zapsaní po zadaném roku (studenti zapsaní v zadaném roce již filtru nevyhoví),
-name
-přidá do filtru omezení na jméno (nebo více jmen) studentů. Chování se trochu liší od ostatních kritérií:
-pokud metoda name nebyla ve filtru použita, filtr neomezuje výsledek podle jmen studentů,
-pokud je metoda name zavolaná právě jednou, musí jména studentů odpovídat zadanému řetězci,
-pokud je metoda name zavolaná vícekrát, musí jména studentů odpovídat nějakému zadanému řetězci.
-Filtrování podle jména (jmen) má dále komplikovanější vlastní porovnávání: při filtrování porovnáváme jména bez rozlišování malých a velkých písmen, a dále při porovnávání považujeme za shodná jména, která se liší pořadím slov. Tedy například "Jan Jakub Ryba" a "Jakub Jan Ryba" a "RYBA jan JaKuB" v porovnání považujeme za shodná (ale např. "Jan Jakub Jan Ryba" se už liší).
-další
-Vaše implementace si do třídy může dodat další potřebné metody a členské proměnné, které budete potřebovat.
-Třída CSort reprezentuje kritéria pro řazení studentů ve výsledku vyhledávání. Řazení může využívat více kritérií pro porovnávání, každé kritérium může být vzestupné nebo sestupné. Předpokládejme, že máme řazení nastaveno na řazení podle jména (první kritérium) a podle data narození (druhé kritérium). Při porovnávání studentů se tedy nejprve srovnají jména, pokud se liší, je pořadí porovnávaných studentů dané. Pokud se jména neliší, použije se pro porovnávání datum narození. Opět, pokud se liší data narození, je pořadí dané, v opačném případě se použije případné další kritérium řazení. Pokud při řazení není k dispozici další kritérium řazení a pořadí stále není rozhodnuté, použije se pořadí registrace studenta v databázi (stabilní řazení). Všimněte si, že pokud nenastavíme žádné kritérium řazení, má být výsledek vyhledávání v pořadí registrace studentů.
+### Výčtový typ `ESortKey`
 
-konstruktor
-konstruktor inicializuje prázdný seznam kritérií řazení,
-addKey (key, ascending)
-metoda přidá další kritérium řazení. Kritérium je dané hodnotou výčtového typu ESortKey (první parametr), druhým parametrem je hodnota true pro vzestupné řazení podle zadaného kritéria nebo false pro sestupné řazení podle zadaného kritéria.
-další
-Vaše implementace si do třídy může dodat další potřebné metody a členské proměnné, které budete potřebovat.
-Třída CStudyDept reprezentuje databázi studentů. Databáze poskytuje následující rozhraní:
+Identifikuje kritérium radenia, s hodnotami:
 
-konstruktor
-konstruktor inicializuje prázdnou databázi,
-addStudent (student)
-metoda přidá studenta do databáze, vrací signalizaci úspěchu (true) nebo neúspěchu (false - duplicitní student),
-delStudent (student)
-metoda odebere studenta z databáze, vrací signalizaci úspěchu (true) nebo neúspěchu (false - student v databázi neexistoval),
-search (filter, sortOpt)
-metoda vyhledá v databázi studenty, kteří vyhovují kritériím filtru filter a vrátí jejich seznam seřazený v pořadí daném podmínkami v sortOpt,
-suggest (name)
-metoda slouží jako našeptávač pro uživatelské rozhraní databáze. Metoda vezme řetězec name, rozdělí jej na jednotlivá slova a najde registrované studenty takové, že jejich jméno obsahuje všechna takto získaná slova z name. Porovnávání slov nerozlišuje malá a velká písmena (case insensitive). Například pokud jsou v databázi registrovaní studenti "Jan Jakub Ryba", "Jan Ryba" a "Jan Novak", pak volání suggest("jan") zahrne všechna tři tato jména, volání suggest("Ryba JaN") vrátí pouze první dva z nich, volání suggest("Ryba Jakub") vrátí pouze prvního z nich, suggest("Ryba Ja") vrátí prázdnou množinu a suggest("Jan jan JAN Ryba RyBa") vrátí první dvě jména.
-další
-Vaše implementace si do třídy může dodat další potřebné metody a členské proměnné, které budete potřebovat.
+- **NAME**: Radenie podľa mena študenta.
+- **BIRTH_DATE**: Radenie podľa dátumu narodenia.
+- **ENROLL_YEAR**: Radenie podľa roku nástupu na fakultu.
+
+> Poznámka: Tento typ je deklarovaný v testovacom prostredí.
+
+### Trieda `CStudent`
+
+Reprezentuje jedného študenta.
+
+- **Konstruktor `(name, dateOfBirth, enrollYear)`**: Inicializuje inštanciu s danými údajmi.
+- **Operátor `==`**: Porovná dve inštancie `CStudent` podľa mena, dátumu narodenia a roku nástupu (citlivý na veľkosť písmen a poradie mien).
+- **Operátor `!=`**: Porovná dve inštancie `CStudent`, či sa líšia (negácia operátora `==`).
+
+### Trieda `CFilter`
+
+Reprezentuje kritériá pre filtrovanie študentov.
+
+- **Konstruktor**: Inicializuje prázdny filter.
+- **bornBefore(date)**: Pridá kritérium pre narodenie pred zadaným dátumom.
+- **bornAfter(date)**: Pridá kritérium pre narodenie po zadanom dátume.
+- **enrolledBefore(year)**: Pridá kritérium pre zápis pred zadaným rokom.
+- **enrolledAfter(year)**: Pridá kritérium pre zápis po zadanom roku.
+- **name(pattern)**: Pridá kritérium na meno. Porovnanie je case-insensitive a nezávislé na poradí slov.
+
+### Trieda `CSort`
+
+Reprezentuje kritériá pre radenie študentov vo výsledku vyhľadávania.
+
+- **Konstruktor**: Inicializuje prázdny zoznam kritérií radenia.
+- **addKey(key, ascending)**: Pridá kritérium radenia podľa výčtového typu `ESortKey` s hodnotou `true` pre vzostupné alebo `false` pre zostupné radenie.
+
+### Trieda `CStudyDept`
+
+Reprezentuje databázu študentov s nasledujúcim rozhraním:
+
+- **Konstruktor**: Inicializuje prázdnu databázu.
+- **addStudent(student)**: Pridá študenta do databázy, vracia `true` pre úspech a `false` pre duplicitu.
+- **delStudent(student)**: Odstráni študenta z databázy, vracia `true` pre úspech a `false` pre neexistujúceho študenta.
+- **search(filter, sortOpt)**: Vyhľadá študentov podľa kritérií filtra `filter` a vráti ich zoradených podľa `sortOpt`.
+- **suggest(name)**: Našeptávač, ktorý pre zadaný reťazec `name` vráti všetkých registrovaných študentov, ktorí zodpovedajú časti mena.
+
+> Poznámka: Implementácia môže obsahovať ďalšie metódy a členské premenné podľa potreby.
