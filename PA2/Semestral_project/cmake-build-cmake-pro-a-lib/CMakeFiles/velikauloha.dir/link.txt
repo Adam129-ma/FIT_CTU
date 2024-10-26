@@ -1,0 +1,3 @@
+C:\Users\adamm\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\velikauloha.dir/objects.a
+C:\Users\adamm\Desktop\School\WINLIB~1.0-R\mingw32\bin\ar.exe qc CMakeFiles\velikauloha.dir/objects.a @CMakeFiles\velikauloha.dir\objects1.rsp
+C:\Users\adamm\Desktop\School\WINLIB~1.0-R\mingw32\bin\C__~1.EXE -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\velikauloha.dir/objects.a -Wl,--no-whole-archive -o velikauloha.exe -Wl,--out-implib,libvelikauloha.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\velikauloha.dir\linkLibs.rsp

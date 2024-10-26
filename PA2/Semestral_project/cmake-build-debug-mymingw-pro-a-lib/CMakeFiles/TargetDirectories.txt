@@ -1,0 +1,3 @@
+C:/Users/adamm/Desktop/School/4.semester/PA2/velikauloha/cmake-build-debug-mymingw-pro-a-lib/CMakeFiles/velikauloha.dir
+C:/Users/adamm/Desktop/School/4.semester/PA2/velikauloha/cmake-build-debug-mymingw-pro-a-lib/CMakeFiles/edit_cache.dir
+C:/Users/adamm/Desktop/School/4.semester/PA2/velikauloha/cmake-build-debug-mymingw-pro-a-lib/CMakeFiles/rebuild_cache.dir
