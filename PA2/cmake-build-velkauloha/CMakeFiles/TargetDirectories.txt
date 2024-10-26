@@ -1,3 +1,0 @@
-C:/Users/adamm/Desktop/School/4.semester/PA2/Velkauloha/cmake-build-velkauloha/CMakeFiles/Velkauloha.dir
-C:/Users/adamm/Desktop/School/4.semester/PA2/Velkauloha/cmake-build-velkauloha/CMakeFiles/edit_cache.dir
-C:/Users/adamm/Desktop/School/4.semester/PA2/Velkauloha/cmake-build-velkauloha/CMakeFiles/rebuild_cache.dir
